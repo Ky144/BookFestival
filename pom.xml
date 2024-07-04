@@ -83,11 +83,21 @@
             <artifactId>quarkus-smallrye-fault-tolerance</artifactId>
         </dependency>
 
-
+        <!--Quarkus Qute-->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy-qute</artifactId>
+        </dependency>
+    <!--Security JWT Token-->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-security-jpa</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-jwt</artifactId>
+        </dependency>
+
 
     </dependencies>
 

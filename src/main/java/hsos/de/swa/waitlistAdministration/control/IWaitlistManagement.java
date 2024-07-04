@@ -16,5 +16,6 @@ public interface IWaitlistManagement {
     public List<WaitlistEntry> getWaitlistByBookFairId(long bookFairId);
     public WaitlistEntry addToWaitlist(long bookFairId, Author author);
     public boolean removeFromWaitlist(long bookFairId, Author author);
+    public boolean removeFromWaitlistByAuthorId(long bookFairId, long authorId);
 
 }
