@@ -30,7 +30,7 @@ public class AuthResource {
         LOG.info("Biete Login-Funktionalitaet");
         if (authManagement.authenticate(loginDTO.username, loginDTO.password)) {
             User user = User.find("username", loginDTO.username).firstResult();
-            String token = authManagement.generateToken(user.username, user.role);
+            String token = authManagement.generateToken(user.username);
             LOG.info("Login erfolgreich");
             return Response.ok().entity(token).build();
         } else {
