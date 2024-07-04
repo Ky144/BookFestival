@@ -1,6 +1,4 @@
 package hsos.de.swa.security.boundary;
-
-import hsos.de.swa.authorAdministration.boundary.rest.AuthorResource;
 import hsos.de.swa.security.boundary.dto.LoginDTO;
 import hsos.de.swa.security.control.AuthManagement;
 
