@@ -1,12 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <title>BookFestival-Planner</title>
+    <script src="/WEB-INF/classes/theme/mytheme/login/resources/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .custom-container {
+            background-color: #f8f9fa; /* Helles Grau */
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body>
-<h1> Willkommen zum BookFestival-Planner!</h1>
-<p>Diese Anwendung dient zur Verwaltung von Authoren und Buchmessen</p>
-<p>Erhalte Informationen über anstehende Buchmessen: </p>
+<div class="container mt-4">
+    <div class="custom-container text-center">
+        <!--Einfügen eines PNG-Bildes -->
+        <div class="mb-4">
+            <img src="/images/logo_rund.png" alt="Logo der Buchmesse" class="img-fluid" style="width: 200px; height: auto;">
+        </div>
+        <h1>Willkommen zum BookFestival-Planner!</h1>
+        <p>Diese Anwendung dient zur Verwaltung von Autoren und Buchmessen</p>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <a href="http://localhost:8080/api/v1/web/bookFair"><button class="btn btn-primary mb-2">Buchmessen</button></a>
+                <a href="http://localhost:8080/api/v1/web/author"><button class="btn btn-primary mb-2">Autoren</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="bg-body-tertiary text-center text-lg-start mt-4">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+        © 2024 Copyright:
+        <a class="text-body" href="http://localhost:8080/api/v1/web/welcome">Zurück zur Startseite</a>
+    </div>
+</footer>
 </body>
 </html>

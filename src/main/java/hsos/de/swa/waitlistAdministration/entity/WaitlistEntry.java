@@ -25,6 +25,12 @@ public class WaitlistEntry {
         this.author = author;
         this.bookFair = bookFair;
     }
+    public Long getAuthorId() {
+        return author != null ? author.getId() : null;
+    }
+    public Long getBookFairId() {
+        return bookFair != null ? bookFair.getId() : null;
+    }
 
     public long getId() {
         return id;

@@ -1,6 +1,7 @@
 package hsos.de.swa.authorAdministration.entity;
 
 import hsos.de.swa.bookFairAdministration.entity.BookFair;
+import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.*;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
@@ -16,9 +17,11 @@ public class Author{
 
     private String firstname;
     private String lastname;
-
-    @ManyToMany(mappedBy = "participants")
+    //cascade, um alle zugehörigen Einträge in der bookfair_participants Tabelle zu löschen
+    @ManyToMany(mappedBy = "participants",cascade = CascadeType.REMOVE)
+    @JsonbTransient
     private Set<BookFair> bookFairs = new HashSet<>();
+
 
     // Konstruktoren
     public Author() {

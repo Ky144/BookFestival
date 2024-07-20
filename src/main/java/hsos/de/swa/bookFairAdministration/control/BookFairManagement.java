@@ -1,7 +1,7 @@
 package hsos.de.swa.bookFairAdministration.control;
 
 import hsos.de.swa.authorAdministration.entity.Author;
-import hsos.de.swa.bookFairAdministration.control.dto.BookFairDTO;
+import hsos.de.swa.bookFairAdministration.boundary.dto.BookFairDTO;
 import hsos.de.swa.bookFairAdministration.entity.BookFair;
 import hsos.de.swa.bookFairAdministration.entity.IBookFairRepository;
 import hsos.de.swa.bookFairAdministration.gateway.RegistrationResult;
@@ -25,6 +25,10 @@ public class BookFairManagement implements IBookFairManagement {
     @Override
     public Collection<BookFair> getBookFairByName(String name) {
         return this.bookFairRepository.getBookFairByName(name);
+    }
+    @Override
+    public Collection<BookFair> getBookFairByLocation(String location) {
+        return this.bookFairRepository.getBookFairByLocation(location);
     }
 
     @Override
@@ -62,10 +66,7 @@ public class BookFairManagement implements IBookFairManagement {
         return this.bookFairRepository.signOut(bookFair_id, author_id);
     }
 
-    @Override
-    public Collection<BookFair> getBookFairsOfAuthor(long author_id) {
-        return this.bookFairRepository.getBookFairsOfAuthor(author_id);
-    }
+
 
     @Override
     public Collection<Author> getParticipantsByBookFairId(long bookFair_id) {

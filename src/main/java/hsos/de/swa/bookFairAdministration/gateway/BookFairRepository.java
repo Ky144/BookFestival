@@ -1,11 +1,9 @@
 package hsos.de.swa.bookFairAdministration.gateway;
 
 import hsos.de.swa.authorAdministration.entity.Author;
-import hsos.de.swa.bookFairAdministration.control.dto.BookFairDTO;
+import hsos.de.swa.bookFairAdministration.boundary.dto.BookFairDTO;
 import hsos.de.swa.bookFairAdministration.entity.BookFair;
 import hsos.de.swa.bookFairAdministration.entity.IBookFairRepository;
-import hsos.de.swa.bookFairAdministration.gateway.RegistrationResult;
-import hsos.de.swa.bookFairAdministration.gateway.SignOutResult;
 import hsos.de.swa.waitlistAdministration.control.WaitlistManagement;
 import hsos.de.swa.waitlistAdministration.entity.WaitlistEntry;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
@@ -40,6 +38,10 @@ public class BookFairRepository implements IBookFairRepository, PanacheRepositor
     public Collection<BookFair> getBookFairByName(String name) {
         return find("name = ?1", name).list();
     }
+    @Override
+    public Collection<BookFair> getBookFairByLocation(String location) {
+        return find("location = ?1", location).list();
+    }
 
     @Override
     @Transactional
@@ -58,11 +60,35 @@ public class BookFairRepository implements IBookFairRepository, PanacheRepositor
     public BookFair edit(long bookFairId, BookFairDTO bookFairDTO) {
         BookFair bookFair = getBookFairById(bookFairId);
         if (bookFair != null) {
+            int currentMaxParticipants = bookFair.getMaxParticipants();
+            int newMaxParticipants = bookFairDTO.getMaxParticipants();
+            int currentParticipantsCount = bookFair.getParticipants().size();
+
             bookFair.setName(bookFairDTO.getName());
             bookFair.setLocation(bookFairDTO.getLocation());
             bookFair.setDate(bookFairDTO.getDate());
-            bookFair.setMaxParticipants(bookFairDTO.getMaxParticipants());
+            bookFair.setMaxParticipants(newMaxParticipants);
             persist(bookFair);
+
+            // Überprüfen, ob neue maxParticipants kleiner als aktuelle Teilnehmeranzahl sind
+            if (newMaxParticipants < currentParticipantsCount) {
+                // Liste der überschüssigen Teilnehmer erstellen
+                List<Author> participantsToWaitlist = new ArrayList<>(bookFair.getParticipants());
+                // Nur die überschüssigen Teilnehmer auf die Warteliste setzen
+                for (int i = currentParticipantsCount - 1; i >= newMaxParticipants; i--) {
+                    Author author = participantsToWaitlist.get(i);
+                    bookFair.removeParticipant(author);
+                    waitlistManagement.addToWaitlist(bookFairId, author);
+                }
+            } else if (newMaxParticipants > currentMaxParticipants) {
+                // Autoren von der Warteliste hinzufügen
+                List<WaitlistEntry> waitlist = waitlistManagement.getWaitlistByBookFairId(bookFairId);
+                while (bookFair.getParticipants().size() < newMaxParticipants && !waitlist.isEmpty()) {
+                    WaitlistEntry entry = waitlist.remove(0);
+                    bookFair.addParticipant(entry.getAuthor());
+                    waitlistManagement.removeFromWaitlist(bookFairId, entry.getAuthor());
+                }
+            }
         }
         return bookFair;
     }
@@ -70,44 +96,40 @@ public class BookFairRepository implements IBookFairRepository, PanacheRepositor
     @Override
     @Transactional
     public boolean delete(long bookFairId) {
+        BookFair bookFair = find("id", bookFairId).firstResult();
+        if (bookFair == null) {
+            return false;
+        }
+
+        // First, remove all waitlist entries for this book fair
+        List<WaitlistEntry> waitlistEntries = waitlistManagement.getWaitlistByBookFairId(bookFairId);
+        for (WaitlistEntry entry : waitlistEntries) {
+            waitlistManagement.removeFromWaitlist(bookFairId, entry.getAuthor());
+        }
+
+        // Then, remove all participants
+        bookFair.getParticipants().clear();
+
+        // Finally, delete the book fair
         return deleteById(bookFairId);
     }
 
-    @Override
-    public Collection<BookFair> getBookFairsOfAuthor(long authorId) {
-        Author author = this.em.find(Author.class, authorId);
-        if (author == null) {
-            return List.of();
-        }
-        Collection<BookFair> allBookFairs = listAll();
-        Collection<BookFair> bookFairsOfAuthor = new ArrayList<>();
-        for (BookFair bookFair : allBookFairs) {
-            if (bookFair.isParticipantSignedIn(author)) {
-                bookFairsOfAuthor.add(bookFair);
-            }
-        }
-        return bookFairsOfAuthor;
-    }
 
     @Override
     @Transactional
     public RegistrationResult signIn(long bookFairId, long authorId) {
         BookFair bookFair = this.em.find(BookFair.class, bookFairId);
         Author author = this.em.find(Author.class, authorId);
-
         if (bookFair == null || author == null) {
             return RegistrationResult.FAILED;
         }
-
         if (bookFair.isParticipantSignedIn(author)) {
             return RegistrationResult.ALREADY_SIGNEDIN;
         }
-
         if (bookFair.getSignendInAuthorsCount() < bookFair.getMaxParticipants()) {
             bookFair.addParticipant(author);
             return RegistrationResult.REGISTERED;
         }
-
         waitlistManagement.addToWaitlist(bookFairId, author);
         return RegistrationResult.WAITLISTED;
     }

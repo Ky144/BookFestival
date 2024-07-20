@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Warteliste</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/WEB-INF/classes/theme/mytheme/login/resources/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .custom-container {
+            background-color: #f8f9fa; /* Helles Grau */
+            border-radius: 10px;
+            padding: 50px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 2000px; /* Setzt die maximale Breite des Containers */
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/api/v1/web/welcome">Buchmessen-Verwaltung</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/api/v1/web/bookFair">Buchmessen</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/api/v1/web/author">Autoren</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container mt-4">
+    <div class="custom-container">
+        <h1 class="text-center mb-4">Warteliste der Buchmesse</h1>
+
+        <div id="message" class="alert alert-info" role="alert">
+            {message}
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Author ID</th>
+                <th>Aktionen</th>
+            </tr>
+            </thead>
+            <tbody>
+            {#for waitlistEntry in waitlist}
+                <tr>
+                    <td>{waitlistEntry.authorId}</td>
+                    <td>
+                        <form action="/api/v1/web/waitlist/{waitlistEntry.bookFairId}/remove/{waitlistEntry.authorId}" method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash"></i> Entfernen
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {/for}
+            </tbody>
+        </table>
+
+        <a href="/api/v1/web/bookFair" class="btn btn-primary">
+            <i class="bi bi-arrow-left"></i> Zurück zur Buchmesse
+        </a>
+    </div>
+</div>
+</body>
+<footer class="bg-body-tertiary text-center text-lg-start mt-4">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+        © 2024 Copyright:
+        <a class="text-body" href="http://localhost:8080/api/v1/web/welcome">Zurück zur Startseite</a>
+        <a href="/api/v1/web/logout" class="btn">
+            <i class="bi bi-box-arrow-right"></i> Logout
+        </a>
+    </div>
+</footer>
+</html>
+
+<script>
+    //https://developer.mozilla.org/en-US/docs/Web/API/Document/DOMContentLoaded_event
+    document.addEventListener('DOMContentLoaded', function() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var message = urlParams.get('message');
+        if (message) {
+            var messageDiv = document.getElementById('message');
+            messageDiv.textContent = message;
+            messageDiv.style.display = 'block';
+        }
+    });
+</script>
+
+

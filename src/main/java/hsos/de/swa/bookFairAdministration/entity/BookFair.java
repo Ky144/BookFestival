@@ -4,6 +4,7 @@ import hsos.de.swa.authorAdministration.entity.Author;
 import hsos.de.swa.waitlistAdministration.entity.WaitlistEntry;
 import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.*;
+import org.hibernate.Hibernate;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -19,16 +20,19 @@ public class BookFair {
     private String location;
     private LocalDate date;
     private int maxParticipants;
+//Quelle: https://stackoverflow.com/questions/2990799/difference-between-fetchtype-lazy-and-eager-in-java-persistence-api
+@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+@JoinTable(
+        name="bookfair_participants",
+        joinColumns = {@JoinColumn(name="bookfair_id")},
+        inverseJoinColumns = {@JoinColumn(name="author_id")}
+)
+private Set<Author> participants = new HashSet<>();
 
-    @JsonbTransient
-    @ManyToMany
-    @JoinTable(
-            name="bookfair_participants",
-            joinColumns = {@JoinColumn(name="bookfair_id")},
-            inverseJoinColumns = {@JoinColumn(name="author_id")}
-    )
-    private Set<Author> participants = new HashSet<>();
 
+    public void loadParticipants() {
+        Hibernate.initialize(participants);
+    }
 
 
     public BookFair() {}

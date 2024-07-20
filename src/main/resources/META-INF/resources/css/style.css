@@ -1,0 +1,131 @@
+:root {
+    --primary-color: #E6EBF3;
+    --secondary-color: #88A1C8;
+    --accent-color: #0D2448;
+    --background-color: F7EACC;
+    --text-color: #011433;
+    --light-text-color: #516E9D;
+    --border-color: #bdc3c7;
+}
+
+
+.alert.alert-info {
+    background-color: #88A1C8 !important;
+
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Arial', sans-serif;
+}
+
+.navbar {
+    background-color: var(--primary-color) !important;
+}
+
+.navbar-brand, .nav-link {
+    color: var(--light-text-color) !important;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+h1, h2, h3 {
+    color: var(--text-color);
+}
+
+.btn-primary {
+    background-color: #88A1C8;
+    border-color: #88A1C8;
+}
+
+.btn-primary:hover {
+    background-color: #142041;
+    border-color: #142041;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-secondary:hover {
+    background-color: #27ae60;
+    border-color: #27ae60;
+}
+
+.btn-warning {
+    background-color: #516E9D;
+    border-color: #516E9D;
+
+}
+
+.btn-warning:hover {
+    background-color: #E6EBF3;
+    border-color: #E6EBF3;
+}
+
+.btn-danger {
+    background-color: #516E9D;
+    border-color: #516E9D;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+    border-color: #c0392b;
+}
+
+.btn-info {
+    background-color: #88A1C8;
+    border-color: #88A1C8;
+}
+
+.btn-info:hover {
+    background-color: #E6EBF3;
+    border-color: #E6EBF3;
+}
+
+.btn-success {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-success:hover {
+    background-color: #142041;
+    border-color: #142041;
+}
+
+.table {
+    background-color: var(--light-text-color);
+    border: 1px solid var(--border-color);
+}
+
+.table thead th {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #516E9D;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+footer {
+    background-color: var(--primary-color) !important;
+    color: var(--light-text-color) !important;
+}
+
+footer a {
+    color: #284573 !important;
+    text-decoration: underline;
+}
+
+footer a:hover {
+    color: var(--secondary-color) !important;
+}

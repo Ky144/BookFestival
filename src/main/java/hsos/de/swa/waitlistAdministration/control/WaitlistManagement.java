@@ -11,6 +11,8 @@ import jakarta.transaction.Transactional;
 
 import java.util.List;
 
+import static io.quarkus.hibernate.orm.panache.PanacheEntityBase.delete;
+
 @ApplicationScoped
 public class WaitlistManagement implements IWaitlistManagement {
 
@@ -22,12 +24,10 @@ public class WaitlistManagement implements IWaitlistManagement {
         return waitlistRepository.findByBookFairId(bookFairId);
     }
 
+
     @Transactional
     @Override
     public WaitlistEntry addToWaitlist(long bookFairId, Author author) {
-        if (waitlistRepository.findByBookFairAndAuthor(bookFairId, author.getId()) != null) {
-            throw new IllegalStateException("Author ist bereits auf der Warteliste für diese Buchmesse");
-        }
         WaitlistEntry entry = new WaitlistEntry(author, new BookFair());
         entry.getBookFair().setId(bookFairId);
         waitlistRepository.persist(entry);
@@ -52,4 +52,11 @@ public class WaitlistManagement implements IWaitlistManagement {
         }
         return waitlist.get(0);
     }
+
+    @Transactional
+    @Override
+    public void removeAllEntriesForAuthor(long authorId) {
+        waitlistRepository.removeAllEntriesForAuthor(authorId);
+    }
+
 }
