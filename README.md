@@ -3,12 +3,14 @@
 Der "BookFestival-Planner" ist ein Autorenverwaltungstool eines Verlags, um eine Übersicht über kommende Buchmessen und den daran teilnehmenden Autoren zu erhalten. Nutzern soll es möglich sein Buchmessen abzurufen und zu filtern und Autoren für die jeweiligen Messen einzutragen
 
 ## Clonen des Git-Repositorys:
+Wähle klonen in der GitHub CLI und kopiere die URL.
+Ändere das aktuelle Arbeitsverzeichnis zum Speicherort, in dem Du das geklonte Verzeichnis haben willst
+Gibt git clone ein und füge die zuvor kopierte URL ein.
 ```shell script
 cd /pfad/zu/ihrem/verzeichnis
-git clone https://github.com/benutzername/author-administration.git
-cd author-administration
-mvn install
-./mvnw quarkus:dev
+git clone https://github.com/benutzername/bookFestival.git
+cd bookFestival
+
 ```
 
 

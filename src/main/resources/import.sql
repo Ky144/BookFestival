@@ -12,16 +12,16 @@ INSERT INTO BookFair (name, location, date, maxParticipants) VALUES ('Bologna Ch
 INSERT INTO BookFair (name, location, date, maxParticipants) VALUES ('BolognaBookFair', 'Bologna', '2025-04-01', 1);
 
 -- Insert relationships between Authors and BookFairs
---INSERT INTO bookfair_participants (bookfair_id, author_id) VALUES (1, 1);  -- John Doe attends Frankfurt Book Fair
-INSERT INTO bookfair_participants (bookfair_id, author_id) VALUES (1, 2);  -- Jane Smith attends Frankfurt Book Fair
-INSERT INTO bookfair_participants (bookfair_id, author_id) VALUES (2, 2);  -- Jane Smith attends Leipzig Book Fair
-INSERT INTO bookfair_participants (bookfair_id, author_id) VALUES (2, 3);  -- Hanna Meier attends Leipzig Book Fair
-INSERT INTO bookfair_participants (bookfair_id, author_id) VALUES (3, 1);  -- John Doe attends Bologna Children
+
+INSERT INTO bookfair_participants (bookfair_id, author_id) VALUES (1, 2);
+INSERT INTO bookfair_participants (bookfair_id, author_id) VALUES (2, 2);
+INSERT INTO bookfair_participants (bookfair_id, author_id) VALUES (2, 3);
+INSERT INTO bookfair_participants (bookfair_id, author_id) VALUES (3, 1);
 
 -- Insert waitlist entries
-INSERT INTO Waitlist (bookfair_id, author_id) VALUES (1, 4);  -- Max Mustermann is on waitlist for Frankfurt Book Fair
-INSERT INTO Waitlist (bookfair_id, author_id) VALUES (1, 5);  -- Emma Watson is on waitlist for Frankfurt Book Fair
+INSERT INTO Waitlist (bookfair_id, author_id) VALUES (1, 4);
+INSERT INTO Waitlist (bookfair_id, author_id) VALUES (1, 5);
 
-INSERT INTO Waitlist (bookfair_id, author_id) VALUES (3, 2);  -- Jane Smith is on waitlist for Bologna Children
-INSERT INTO Waitlist (bookfair_id, author_id) VALUES (3, 3);  -- Hanna Meier is on waitlist for Bologna Children
-INSERT INTO Waitlist (bookfair_id, author_id) VALUES (4, 4);  -- Max Mustermann is on waitlist for BolognaBookFair
+INSERT INTO Waitlist (bookfair_id, author_id) VALUES (3, 2);
+INSERT INTO Waitlist (bookfair_id, author_id) VALUES (3, 3);
+INSERT INTO Waitlist (bookfair_id, author_id) VALUES (4, 4);

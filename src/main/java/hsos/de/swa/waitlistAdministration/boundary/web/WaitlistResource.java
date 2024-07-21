@@ -32,7 +32,12 @@ public class WaitlistResource {
     @Inject
     @Location("WaitlistResource/waitlistResource.html")
     Template waitlistTemplate;
-
+    /**
+     * Gibt Warteliste der jeweiligen Buchmesse aus
+     * @param bookFairId
+     * @param bookFairId
+     * @return
+     */
     @GET
     @Path("/{bookFairId}")
     @RolesAllowed({"admin", "author"})
@@ -48,6 +53,12 @@ public class WaitlistResource {
         return waitlistTemplate.data("waitlist", waitlist).data("message", "");
     }
 
+    /*
+     * Entfernt Author aus der Warteliste
+     * @param bookFairId
+     * @param authorId
+     * @return
+     */
     @POST
     @Path("/{bookFairId}/remove/{authorId}")
     @RolesAllowed({"admin", "author"})

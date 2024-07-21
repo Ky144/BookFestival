@@ -91,7 +91,9 @@
 
 <script>
     //https://developer.mozilla.org/en-US/docs/Web/API/Document/DOMContentLoaded_event
+
     document.addEventListener('DOMContentLoaded', function() {
+        //https://wiki.selfhtml.org/wiki/JavaScript/URLSearchParams
         var urlParams = new URLSearchParams(window.location.search);
         var message = urlParams.get('message');
         if (message) {
